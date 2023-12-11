@@ -15,6 +15,11 @@
 
 namespace sad {
 
+/**
+ * @brief : IMU积分
+ * @param {IMU&} imu
+ * @return {*}
+ */
 void GinsPreInteg::AddImu(const IMU& imu) {
     if (first_gnss_received_ && first_imu_received_) {
         pre_integ_->Integrate(imu, imu.timestamp_ - last_imu_.timestamp_);

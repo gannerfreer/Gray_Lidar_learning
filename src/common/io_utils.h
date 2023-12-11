@@ -1,5 +1,6 @@
 //
 // Created by xiang on 2021/7/20.
+// 我的评价是 这份代码太夸张了 需要一定的智力水平才能驾驭这种复杂度的出入参和函数之间的调用
 //
 
 #ifndef SLAM_IN_AUTO_DRIVING_IO_UTILS_H
@@ -35,11 +36,12 @@ class TxtIO {
    public:
     TxtIO(const std::string &file_path) : fin(file_path) {}
 
-    /// 定义回调函数
+    /// 定义回调函数 定义但是不用实现
     using IMUProcessFuncType = std::function<void(const IMU &)>;
     using OdomProcessFuncType = std::function<void(const Odom &)>;
     using GNSSProcessFuncType = std::function<void(const GNSS &)>;
 
+    // 返回类对象引用 可以链式调用
     TxtIO &SetIMUProcessFunc(IMUProcessFuncType imu_proc) {
         imu_proc_ = std::move(imu_proc);
         return *this;
@@ -93,16 +95,18 @@ class RosbagIO {
 
     /// 通用处理函数
     RosbagIO &AddHandle(const std::string &topic_name, MessageProcessFunction func) {
+        // 传入topic和对应的函数对象
         process_func_.emplace(topic_name, func);
         return *this;
     }
 
     /// 2D激光处理
     RosbagIO &AddScan2DHandle(const std::string &topic_name, Scan2DHandle f) {
+        // 以值捕获句柄 f , f是函数指针,这样写合理
         return AddHandle(topic_name, [f](const rosbag::MessageInstance &m) -> bool {
-            auto msg = m.instantiate<sensor_msgs::LaserScan>();
+            auto msg = m.instantiate<sensor_msgs::LaserScan>();// 实例化消息
             if (msg == nullptr) {
-                return false;
+                return false; // 这里是f函数的返回
             }
             return f(msg);
         });
@@ -222,6 +226,7 @@ class RosbagIO {
     /// 根据数据集名称确定IMU topic名称
     std::string GetIMUTopicName() const;
 
+    /// 用一个map保存所有回调函数
     std::map<std::string, MessageProcessFunction> process_func_;
     std::string bag_file_;
     DatasetType dataset_type_;

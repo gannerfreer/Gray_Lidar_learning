@@ -42,6 +42,9 @@
 # cmake
 **build**
 
+# ide&editor
+.vscode
+
 bin
 .idea
 data/ch6/frame*.txt

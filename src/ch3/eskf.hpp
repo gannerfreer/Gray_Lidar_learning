@@ -131,6 +131,7 @@ class ESKF {
     Vec3d GetGravity() const { return g_; }
 
    private:
+   // 所以随机游走和噪声参数非常敏感
     void BuildNoise(const Options& options) {
         double ev = options.acce_var_;
         double et = options.gyro_var_;

@@ -256,7 +256,7 @@ TEST(PREINTEGRATION_TEST, ESKF_TEST) {
             last_gnss_set = true;
         })
         .SetOdomProcessFunc([&](const sad::Odom& odom) { imu_init.AddOdom(odom); })
-        .Go();
+        .Go();// go 就开始遍历文件了
 
     SUCCEED();
 }

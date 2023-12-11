@@ -68,7 +68,11 @@ std::string RosbagIO::GetLidarTopicName() const {
         return avia_lidar_topic;
     }
 }
-
+/**
+ * @brief : 遍历rosbag
+ * @note 这个go有点东西, 可以直接遍历bag
+ * @return {*}
+ */
 void RosbagIO::Go() {
     rosbag::Bag bag(bag_file_);
     LOG(INFO) << "running in " << bag_file_ << ", reg process func: " << process_func_.size();

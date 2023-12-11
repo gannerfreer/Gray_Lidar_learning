@@ -9,4 +9,6 @@ add_subdirectory(ch8)
 add_subdirectory(ch9)
 add_subdirectory(ch10)
 
+add_subdirectory(gray)
+
 add_subdirectory(tools)

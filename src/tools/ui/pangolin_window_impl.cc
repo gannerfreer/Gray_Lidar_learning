@@ -9,6 +9,7 @@
 
 namespace sad::ui {
 
+/// @brief unique lock
 using UL = std::unique_lock<std::mutex>;
 
 bool PangolinWindowImpl::Init() {
@@ -45,6 +46,10 @@ bool PangolinWindowImpl::DeInit() {
     return true;
 }
 
+/**
+ * @brief 
+ * @return {*}
+ */
 bool PangolinWindowImpl::UpdateGlobalMap() {
     if (!cloud_global_need_update_.load()) {
         return false;
@@ -73,6 +78,7 @@ bool PangolinWindowImpl::UpdateGlobalMap() {
 
     return true;
 }
+
 
 bool PangolinWindowImpl::UpdateCurrentScan() {
     UL lock(mtx_current_scan_);

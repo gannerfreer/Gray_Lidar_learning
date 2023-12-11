@@ -24,9 +24,9 @@ DEFINE_bool(with_ui, true, "是否显示图形界面");
 DEFINE_bool(debug, false, "是否打印调试信息");
 
 int main(int argc, char** argv) {
-    google::InitGoogleLogging(argv[0]);
-    FLAGS_stderrthreshold = google::INFO;
-    FLAGS_colorlogtostderr = true;
+    google::InitGoogleLogging(argv[0]);  // 初始化log当前目录
+    FLAGS_stderrthreshold = google::INFO;//log等级为INFO级别
+    FLAGS_colorlogtostderr = true;       // 设置记录到标准输出的颜色消息（如果终端支持）
     google::ParseCommandLineFlags(&argc, &argv, true);
 
     if (fLS::FLAGS_txt_path.empty()) {
@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
     }
 
     /// 设置各类回调函数
+    /// 因为每个设置函数都返回了Txtio变量自身,所以可以一直调用
     io.SetIMUProcessFunc([&](const sad::IMU& imu) {
           /// IMU 处理函数
           if (!imu_init.InitSuccess()) {
@@ -140,7 +141,7 @@ int main(int argc, char** argv) {
                 gins.AddOdom(odom);
             }
         })
-        .Go();
+        .Go();// Go 为啥不使用lambda实现， 因为做不到，使用lambda的话就不方便调用其他函数了
 
     while (ui && !ui->ShouldQuit()) {
         usleep(1e5);
