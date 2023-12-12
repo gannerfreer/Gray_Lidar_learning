@@ -46,7 +46,7 @@ void GinsPreInteg::SetOptions(sad::GinsPreInteg::Options options) {
     double o2 = 1.0 / (options_.odom_var_ * options_.odom_var_);
     options_.odom_info_.diagonal() << o2, o2, o2;
 
-    prior_info_.block<6, 6>(9, 9) = Mat6d ::Identity() * 1e6;
+    prior_info_.block<6, 6>(9, 9) = Mat6d::Identity() * 1e6;
 
     if (this_frame_) {
         this_frame_->bg_ = options_.preinteg_options_.init_bg_;

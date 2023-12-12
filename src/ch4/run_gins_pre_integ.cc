@@ -39,11 +39,12 @@ int main(int argc, char** argv) {
     sad::TxtIO io(fLS::FLAGS_txt_path);
     Vec2d antenna_pos(fLD::FLAGS_antenna_pox_x, fLD::FLAGS_antenna_pox_y);
 
+
+    // 结果保存函数
     auto save_vec3 = [](std::ofstream& fout, const Vec3d& v) { fout << v[0] << " " << v[1] << " " << v[2] << " "; };
     auto save_quat = [](std::ofstream& fout, const Quatd& q) {
         fout << q.w() << " " << q.x() << " " << q.y() << " " << q.z() << " ";
     };
-
     auto save_result = [&save_vec3, &save_quat](std::ofstream& fout, const sad::NavStated& save_state) {
         fout << std::setprecision(18) << save_state.timestamp_ << " " << std::setprecision(9);
         save_vec3(fout, save_state.p_);
@@ -53,10 +54,12 @@ int main(int argc, char** argv) {
         save_vec3(fout, save_state.ba_);
         fout << std::endl;
     };
-
     std::ofstream fout("./data/ch4/gins_preintg.txt");
+    // -----------
+
     bool imu_inited = false, gnss_inited = false;
 
+    /// TODO: option实现文件存取
     sad::GinsPreInteg::Options gins_options;
     gins_options.verbose_ = FLAGS_debug;
     sad::GinsPreInteg gins(gins_options);
@@ -135,15 +138,17 @@ int main(int argc, char** argv) {
             gnss_inited = true;
         })
         .SetOdomProcessFunc([&](const sad::Odom& odom) {
+            /// TODO: 这里加初始化判断
             imu_init.AddOdom(odom);
 
             if (imu_inited && gnss_inited) {
                 gins.AddOdom(odom);
             }
         })
-        .Go();// Go 为啥不使用lambda实现， 因为做不到，使用lambda的话就不方便调用其他函数了
+        .Go();// Go 阻塞调用
 
     while (ui && !ui->ShouldQuit()) {
+        // 界面主线程循环等待退出
         usleep(1e5);
     }
     if (ui) {

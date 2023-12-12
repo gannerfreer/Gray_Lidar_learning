@@ -1,6 +1,11 @@
-//
-// Created by xiang on 2021/11/5.
-//
+/*
+ * @Author: Gray g-ray@qq.com
+ * @Date: 2023-11-16 17:13:28
+ * @LastEditors: Gray g-ray@qq.com
+ * @LastEditTime: 2023-12-11 17:47:22
+ * @FilePath: /Gray_Lidar_learning/src/ch3/run_imu_integration.cc
+ * @Description:
+ */
 
 #include <glog/logging.h>
 #include <iomanip>
@@ -28,7 +33,7 @@ int main(int argc, char** argv) {
 
     // 该实验中，我们假设零偏已知
     Vec3d gravity(0, 0, -9.8);  // 重力方向
-    Vec3d init_bg(00.000224886, -7.61038e-05, -0.000742259);
+    Vec3d init_bg(0.000224886, -7.61038e-05, -0.000742259);
     Vec3d init_ba(-0.165205, 0.0926887, 0.0058049);
 
     sad::IMUIntegration imu_integ(gravity, init_bg, init_ba);
@@ -40,6 +45,8 @@ int main(int argc, char** argv) {
     }
 
     /// 记录结果
+    /// TODO: 修改成函数,保存到工具集中
+    /// TODO: kitti/tum/euroc格式 作为参数传入
     auto save_result = [](std::ofstream& fout, double timestamp, const Sophus::SO3d& R, const Vec3d& v,
                           const Vec3d& p) {
         auto save_vec3 = [](std::ofstream& fout, const Vec3d& v) { fout << v[0] << " " << v[1] << " " << v[2] << " "; };

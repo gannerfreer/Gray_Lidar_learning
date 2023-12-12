@@ -2,13 +2,10 @@
  * @Author: Gray g-ray@qq.com
  * @Date: 2023-11-16 17:13:28
  * @LastEditors: Gray g-ray@qq.com
- * @LastEditTime: 2023-12-12 13:48:14
- * @FilePath: /Gray_Lidar_learning/src/ch4/g2o_types.h
+ * @LastEditTime: 2023-12-12 14:43:47
+ * @FilePath: /Gray_Lidar_learning/src/gray/g2o_types.h
  * @Description: 
  */
-//
-// Created by xiang on 23-1-19.
-//
 
 #ifndef SLAM_IN_AUTO_DRIVING_CH4_G2O_TYPES_H
 #define SLAM_IN_AUTO_DRIVING_CH4_G2O_TYPES_H
@@ -19,7 +16,7 @@
 #include <g2o/core/base_vertex.h>
 #include <g2o/core/robust_kernel.h>
 
-#include "ch4/imu_preintegration.h"
+#include "gray/imu_preintegration.h"
 #include "common/eigen_types.h"
 
 namespace sad {

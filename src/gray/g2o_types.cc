@@ -1,8 +1,5 @@
-//
-// Created by xiang on 23-1-19.
-//
 
-#include "ch4/g2o_types.h"
+#include "gray/g2o_types.h"
 #include "common/g2o_types.h"
 
 namespace sad {
