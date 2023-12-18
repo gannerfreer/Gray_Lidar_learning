@@ -20,7 +20,7 @@ DEFINE_string(txt_path, "./data/ch3/10.txt", "数据文件路径");
 DEFINE_double(antenna_angle, 12.06, "RTK天线安装偏角（角度）");
 DEFINE_double(antenna_pox_x, -0.17, "RTK天线安装偏移X");
 DEFINE_double(antenna_pox_y, -0.20, "RTK天线安装偏移Y");
-DEFINE_bool(with_ui, true, "是否显示图形界面");
+DEFINE_bool(with_ui, false, "是否显示图形界面");
 DEFINE_bool(debug, false, "是否打印调试信息");
 
 int main(int argc, char** argv) {
@@ -67,11 +67,11 @@ int main(int argc, char** argv) {
     bool first_gnss_set = false;
     Vec3d origin = Vec3d::Zero();
 
-    std::shared_ptr<sad::ui::PangolinWindow> ui = nullptr;
-    if (FLAGS_with_ui) {
-        ui = std::make_shared<sad::ui::PangolinWindow>();
-        ui->Init();
-    }
+    // std::shared_ptr<sad::ui::PangolinWindow> ui = nullptr;
+    // if (FLAGS_with_ui) {
+    //     ui = std::make_shared<sad::ui::PangolinWindow>();
+    //     ui->Init();
+    // }
 
     /// 设置各类回调函数
     /// 因为每个设置函数都返回了Txtio变量自身,所以可以一直调用
@@ -104,10 +104,10 @@ int main(int argc, char** argv) {
 
           auto state = gins.GetState();
           save_result(fout, state);
-          if (ui) {
-              ui->UpdateNavState(state);
-              usleep(5e2);
-          }
+        //   if (ui) {
+        //       ui->UpdateNavState(state);
+              usleep(1e4);
+        //   }
       })
         .SetGNSSProcessFunc([&](const sad::GNSS& gnss) {
             /// GNSS 处理函数
@@ -131,10 +131,10 @@ int main(int argc, char** argv) {
 
             auto state = gins.GetState();
             save_result(fout, state);
-            if (ui) {
-                ui->UpdateNavState(state);
-                usleep(1e3);
-            }
+            // if (ui) {
+            //     ui->UpdateNavState(state);
+                usleep(1e4);
+            // }
             gnss_inited = true;
         })
         .SetOdomProcessFunc([&](const sad::Odom& odom) {
@@ -147,12 +147,12 @@ int main(int argc, char** argv) {
         })
         .Go();// Go 阻塞调用
 
-    while (ui && !ui->ShouldQuit()) {
-        // 界面主线程循环等待退出
-        usleep(1e5);
-    }
-    if (ui) {
-        ui->Quit();
-    }
+    // while (ui && !ui->ShouldQuit()) {
+    //     // 界面主线程循环等待退出
+    //     usleep(1e5);
+    // }
+    // if (ui) {
+    //     ui->Quit();
+    // }
     return 0;
 }

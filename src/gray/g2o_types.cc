@@ -85,6 +85,8 @@ void EdgeInertial::linearizeOplus() {
     //  ev 3 |
     //  ep 6 |
 
+    
+
     /// 残差对R1, 9x3
     _jacobianOplus[0].setZero();
     // dR/dR1, 4.42

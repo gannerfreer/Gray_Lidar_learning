@@ -47,7 +47,8 @@ void TxtIO::Go() {
             gnss_proc_(GNSS(time, 4, Vec3d(lat, lon, alt), heading, heading_valid));
         }
 
-        /// TODO: 考虑是否需要sleep
+        // /// TODO: 考虑是否需要sleep
+        // usleep(1e3);
     }
 
     LOG(INFO) << "done.";
